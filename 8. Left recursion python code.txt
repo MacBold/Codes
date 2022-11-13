@@ -1,0 +1,43 @@
+﻿Left recursion python code:- 
+
+
+l,l1,ll=[],[],[]
+n=int(input("Enter Number of Productions\n"))
+nt=input("Enter the non terminal\n")
+for i in range(n):
+        x=str(input("Enter The Production\n"))
+        l.append(x)
+for i in l:
+        if (nt == i[0]):
+            ll.append(i[1:]+str(nt)+"`")
+        else :
+           l1.append(i)
+ll.append("#")
+for i in range(len(l1)):
+        l1[i]=l1[i]+str(nt)+"`"
+if (len(ll)>1):
+        print(nt,"=",l1)
+        print(nt,"`=",ll)
+else :
+        print("left rec is avoided")
+
+
+
+
+/* Command Sequence
+Python filename.py
+
+
+Input:-
+Enter number of productions
+3
+Enter the non terminal
+A
+Enter The Production
+ABd
+Enter The Production
+Aa
+Enter The Production
+a
+A = aA’
+A’ = BdA’ , aA’ , # (epsilon) */

@@ -1,0 +1,26 @@
+﻿%{
+#include<stdio.h>
+%}
+%%
+["&&"|"!"] {printf("Recognized Logical OP\n");}
+. ;
+%%
+int yywrap()
+{
+return 1;
+}
+int main()
+{
+        yyin=fopen("hello.c","r");
+        yylex();
+        return 0;
+}
+
+
+For output, enter just && or !
+
+
+Output
+Flex filename.l
+Gcc lex.yy.c
+./a.out

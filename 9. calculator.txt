@@ -1,0 +1,83 @@
+﻿.l file:
+%{
+#include "y.tab.h"
+%}
+%%
+[0-9]+ {yylval.num = atof(yytext); return number;}
+[+*/-] {return yytext [0];}
+sin {return sin1;}
+cos {return cos1;}
+tan {return tan1;}
+%%
+
+
+int yywrap() {
+return 1;
+}
+
+
+.y file:
+%{
+#include "stdio.h"
+#include "math.h"
+%}
+
+
+%union {float num;}
+%start S
+%token <num> number
+%type <num> E
+%token sin1
+%token cos1
+%token tan1
+
+
+
+
+%%
+S : E
+ | S E
+ ;
+E : E '+' number {$$=$1+$3;printf("Ans=%f", $$);}
+  ;
+E : E '-' number {$$=$1-$3;printf("Ans=%f", $$);}
+  ;
+E : E '*' number {$$=$1*$3;printf("Ans=%f", $$);}
+  ;
+E : E '/' number {$$=$1/$3;printf("Ans=%f", $$);}
+  ;
+E : cos1 number  {printf("ans=%f",cos(($2/180)*3.14));}
+  ;
+E : sin1 number {printf("ans=%f",sin(($2/180)*3.14));}
+  ;
+E : tan1 number {printf("ans=%f",tan(($2/180)*3.14));}
+  ;
+E : number {$$=$1;}
+  ;
+%%
+int main()
+{
+yyparse();
+return 0;
+}
+
+
+int yyerror()
+{
+exit (0);
+}
+
+
+
+
+Output:
+flex filename.l
+yacc -d filename.y
+gcc lex.yy.c y.tab.c -lm
+./a.out
+
+
+Sin 90
+Cos 30
+6+1
+7*2+6

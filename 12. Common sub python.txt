@@ -1,0 +1,50 @@
+﻿12. Optimize generated 3 -address code using common - sub expression
+Python:
+lhsexp=[]
+rhsexp=[]
+temp=[]
+n = int(input("enter no of productions: "))
+for i in range (0,n):
+    m = str (input ("enter the input: "))
+    l = m.split ("=", 1)
+    print(l)
+    if l[0] in lhsexp:
+        lhsexp.append(l[0])
+        temp.append(l[0])
+        rhsexp.append(l[1])
+    else:
+        lhsexp.append(l[0])
+        print("temp=",temp)
+        if l[1] in rhsexp:	
+            i=rhsexp.index(l[1])
+            if lhsexp[i] in temp:
+                rhsexp.append(l[1])
+            else:
+                rhsexp.append(lhsexp[i])
+        else:
+            rhsexp.append(l[1])
+       
+print("LHSEXP=",lhsexp)
+print("RHSEXP=",rhsexp)
+print("optimised output: ")
+for i in range (0,n):
+    print(lhsexp[i]+"="+rhsexp[i])
+
+
+Input:
+
+Production: 4
+
+a = 10;
+
+b = a + 1 * 2;
+
+c = a + 1 * 2;  
+d = c + a;
+
+Output:
+optimised output: 
+a = 10;
+b = a + 1 * 2;
+c =b 
+d = c + a;
